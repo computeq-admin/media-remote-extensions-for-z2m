@@ -1,7 +1,7 @@
 class my_lms_control {
     constructor(zigbee, mqtt, state, publishEntityState, eventBus, settings, logger) {
-        logger.info('Loaded my_lms_control');
-        mqtt.publish('extension/info', 'hello from my_lms_control');
+        logger.info('Loaded lms_control');
+        mqtt.publish('extension/info', 'hello from lms_control');
         this.mqttBaseTopic = settings.get().mqtt.base_topic;
         this.eventBus = eventBus;
         this.mqtt = mqtt;
@@ -13,6 +13,11 @@ class my_lms_control {
         //local values for Sonos
         this.lms_mac_for_control = {};
         this.lms_volume_step = {};
+        this.lms_fav_dot_1_short_no = {};
+        this.lms_fav_dot_1_long_no = {};
+        this.lms_fav_dot_2_short_no = {};
+        this.lms_fav_dot_3_long_no = {};
+
         //-----------------------------------
         //Configure here
         //-----------------------------------
@@ -26,6 +31,10 @@ class my_lms_control {
         //LMS Player
         this.lms_mac_for_control["0x1234567890abcdef"] = "aa:bb:cc:dd:ee:ff";
         this.lms_volume_step["0x1234567890abcdef"] = "2";
+        this.lms_fav_dot_1_short_no["0x1234567890abcdef"] = "1";
+        this.lms_fav_dot_1_long_no["0x1234567890abcdef"] = "2";
+        this.lms_fav_dot_2_short_no["0x1234567890abcdef"] = "3";
+        this.lms_fav_dot_3_long_no["0x1234567890abcdef"] = "4";
         //-----------------------------------
         //End of configuration
         //-----------------------------------
@@ -85,6 +94,10 @@ class my_lms_control {
             var the_message = JSON.stringify({'method': 'slim.request', 'params': [the_mac, ["playlist","index","-1"]]});
             call_lms_json_rpc (the_object, the_message);
         }
+        function lms_play_fav (the_object, the_mac, the_id) {
+            var the_message = JSON.stringify({'method': 'slim.request', 'params': [the_mac, ["favorites","playlist","play","item_id:"+the_id]]});
+            call_lms_json_rpc (the_object, the_message);
+        }
 
         const { entity, update } = data;
 
@@ -111,32 +124,31 @@ class my_lms_control {
             }
             if (entity.zh._modelID == 'SYMFONISK sound remote gen2') { //IKEA Gen 2
                 if ((update.action === 'toggle') || (update.action === 'play_pause'))  {
-                    //lms_toggle (this, the_mac);
+                    lms_toggle (this, the_mac);
                 }
                 if ((update.action === 'volume_up') || (update.action === 'volume_up_hold')) {
-                    //lms_volume_up (this, the_mac, the_step);
+                    lms_volume_up (this, the_mac, the_step);
                 }
                 if ((update.action === 'volume_down') || (update.action === 'volume_down_hold')) {
-                    //lms_volume_down (this, the_mac, the_step);
+                    lms_volume_down (this, the_mac, the_step);
                 }
                 if (update.action === 'track_next') {
-                    //lms_next (this, the_mac);
+                    lms_next (this, the_mac);
                 }
                 if (update.action === 'track_previous') {
-                    //lms_previous (this, the_mac);
+                    lms_previous (this, the_mac);
                 }
-                //tbd, these get fired when the dot buttons are pressed
                 if (update.action === 'dots_1_short_release') {
-        
+                    lms_play_fav (the_object, the_mac, lms_fav_dot_1_short_no[entity.ID]);
                 }
                 if (update.action === 'dots_1_long_press') {
-        
+                    lms_play_fav (the_object, the_mac, lms_fav_dot_1_long_no[entity.ID]);
                 }
                 if (update.action === 'dots_2_short_release') {
-        
+                    lms_play_fav (the_object, the_mac, lms_fav_dot_2_short_no[entity.ID]);
                 }
                 if (update.action === 'dots_2_long_press') {
-        
+                    lms_play_fav (the_object, the_mac, lms_fav_dot_2_long_no[entity.ID]);
                 }
             }
         }
