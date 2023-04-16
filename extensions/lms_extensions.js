@@ -1,4 +1,4 @@
-class lms_control {
+class my_lms_control {
     constructor(zigbee, mqtt, state, publishEntityState, eventBus, settings, logger) {
         logger.info('Loaded lms_control');
         mqtt.publish('extension/info', 'hello from lms_control');
@@ -151,4 +151,4 @@ class lms_control {
     }
 }
 
-module.exports = lms_control;
+module.exports = my_lms_control;
