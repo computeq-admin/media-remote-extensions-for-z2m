@@ -1,6 +1,6 @@
 class my_lms_control {
     constructor(zigbee, mqtt, state, publishEntityState, eventBus, settings, logger) {
-        logger.info('Loaded lms_control');
+        logger.info('Loaded my_lms_control');
         mqtt.publish('extension/info', 'hello from my_lms_control');
         this.mqttBaseTopic = settings.get().mqtt.base_topic;
         this.eventBus = eventBus;
