@@ -1,9 +1,9 @@
 # media-remote-extensions-for-z2m
 Extensions for Zigbee2MQTT to control Sonos devices or Logitech Media Server aka Squeezebox players via Zigbee remotes.
 
-##Supported devices
+## Supported devices
 
-##Supported media systems
+## Supported media systems
 Currently there are extensions for
 - Sonos S2 devices
 - Logitech Media Server aka Slimserver fpr Squeezebox players
