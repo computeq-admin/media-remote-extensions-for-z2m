@@ -190,9 +190,9 @@ class sonos_control {
 
         // Remotes
         if (Object.keys(this.sonos_ip_for_control).includes(entity.ID) ) {
+            var the_ip = this.sonos_ip_for_control[entity.ID];
             //this.logger.info("received command:"+update.action);
             if (entity.zh._modelID == 'SYMFONISK Sound Controller') { //IKEA Gen 1
-                var the_ip = this.sonos_ip_for_control[entity.ID];
                 if (update.action === 'toggle') {
                     call_sonos_toggle (this, the_ip); 
                 }
@@ -210,7 +210,6 @@ class sonos_control {
                 }
             }
             if (entity.zh._modelID == 'SYMFONISK sound remote gen2') { //IKEA Gen 2
-                var the_ip = this.sonos_ip_for_control[entity.ID];
                 if ((update.action === 'toggle') || (update.action === 'play_pause'))  {
                     call_sonos_toggle (this, the_ip); 
                 }
