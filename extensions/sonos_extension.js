@@ -1,6 +1,6 @@
 class sonos_control {
     constructor(zigbee, mqtt, state, publishEntityState, eventBus, settings, logger) {
-        logger.info('Loaded  sonos_control');
+        logger.info('Loaded sonos_control');
         mqtt.publish('example/extension', 'hello from sonos_control');
         this.mqttBaseTopic = settings.get().mqtt.base_topic;
         this.eventBus = eventBus;
@@ -10,14 +10,14 @@ class sonos_control {
         //logger
         this.logger = logger;
         
-        //local values for toggle Sonos
+        //local values for Sonos
         this.sonos_ip_for_control = {};
         this.sonos_volume_step = {};
         //-----------------------------------
         //Configure here
         //-----------------------------------
-        // IKEA-Remote_Gen2-1 (0x1c34f1fffee7cfa3) -> Küche (192.168.2.59)
-        this.sonos_ip_for_control["0x1234567890abcdef"] = '192.168.x.x'; 
+        // example
+        this.sonos_ip_for_control["0x1234567890abcdef"] = '192.168.x.y'; 
         this.sonos_volume_step["0x1234567890abcdef"] = '2'; 
         //-----------------------------------
         //End of configuration
@@ -26,7 +26,7 @@ class sonos_control {
 
     async onStateChange(data) {
 
-        //Sonos uPNP
+        //Sonos uPNP Envelope
         var soap_envelope = function(body) {
             return '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"><s:Body>'+body+'</s:Body></s:Envelope>';
         }
@@ -189,7 +189,8 @@ class sonos_control {
         const { entity, update } = data;
 
         // Remotes
-        if (Object.keys(this.sosos_ip_for_control).includes(entity.ID) ) {
+        if (Object.keys(this.sonos_ip_for_control).includes(entity.ID) ) {
+            //this.logger.info("received command:"+update.action);
             if (entity.zh._modelID == 'SYMFONISK Sound Controller') { //IKEA Gen 1
                 var the_ip = this.sonos_ip_for_control[entity.ID];
                 if (update.action === 'toggle') {
@@ -211,7 +212,6 @@ class sonos_control {
             if (entity.zh._modelID == 'SYMFONISK sound remote gen2') { //IKEA Gen 2
                 var the_ip = this.sonos_ip_for_control[entity.ID];
                 if ((update.action === 'toggle') || (update.action === 'play_pause'))  {
-                    //this.logger.info("received toggle");
                     call_sonos_toggle (this, the_ip); 
                 }
                 if ((update.action === 'volume_up') || (update.action === 'volume_up_hold')) {
