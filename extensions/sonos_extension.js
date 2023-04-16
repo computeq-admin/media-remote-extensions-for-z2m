@@ -1,7 +1,7 @@
 class my_sonos_control {
     constructor(zigbee, mqtt, state, publishEntityState, eventBus, settings, logger) {
         logger.info('Loaded sonos_control');
-        mqtt.publish('example/extension', 'hello from sonos_control');
+        mqtt.publish('example/extension', 'hello from my_sonos_control');
         this.mqttBaseTopic = settings.get().mqtt.base_topic;
         this.eventBus = eventBus;
         this.mqtt = mqtt;
