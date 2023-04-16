@@ -1,4 +1,4 @@
-class sonos_control {
+class my_sonos_control {
     constructor(zigbee, mqtt, state, publishEntityState, eventBus, settings, logger) {
         logger.info('Loaded sonos_control');
         mqtt.publish('example/extension', 'hello from sonos_control');
@@ -251,4 +251,4 @@ class sonos_control {
     }
 }
 
-module.exports = sonos_control;
+module.exports = my_sonos_control;
