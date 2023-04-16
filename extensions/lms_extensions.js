@@ -31,7 +31,7 @@ class my_lms_control {
         //LMS Player
         this.lms_mac_for_control["0x1234567890abcdef"] = "aa:bb:cc:dd:ee:ff";
         this.lms_volume_step["0x1234567890abcdef"] = "2";
-        // Order no of the fvorite in the Webinterface beginning with 
+        // Order position of the favorite in the Webinterface beginning with  
         // 0 = first entry
         this.lms_fav_dot_1_short_no["0x1234567890abcdef"] = "1";
         this.lms_fav_dot_1_long_no["0x1234567890abcdef"] = "2";
