@@ -2,6 +2,8 @@
 Extensions for Zigbee2MQTT to control Sonos devices or Logitech Media Server aka Squeezebox players via Zigbee remotes.
 
 ## Supported devices
+- IKEA Symfonisk Remote Gen 1
+- IKEA Symfonisk Remote Gen 2
 
 ## Supported media systems
 Currently there are extensions for
